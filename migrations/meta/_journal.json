@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1714775059845,
+      "tag": "0000_spotty_scarecrow",
+      "breakpoints": true
+    }
+  ]
+}

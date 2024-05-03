@@ -6,13 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:push": "drizzle-kit push:sqlite --config ./drizzle.config.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.10.2",
     "@apollo/server": "^4.10.4",
     "@as-integrations/next": "^3.0.0",
+    "@libsql/client": "^0.6.0",
     "@nextui-org/react": "^2.3.6",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.20.17",
+    "drizzle-orm": "^0.30.10",
     "framer-motion": "^11.1.7",
     "graphql": "^16.8.1",
     "lucide-react": "^0.378.0",
