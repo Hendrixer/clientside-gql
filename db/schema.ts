@@ -18,6 +18,7 @@ export const users = sqliteTable('users', {
   id: id(),
   createdAt: createdAt(),
   email: text('email').unique().notNull(),
+  password: text('password').notNull(),
 })
 
 export const userRelations = relations(users, ({ many }) => ({
@@ -26,7 +27,7 @@ export const userRelations = relations(users, ({ many }) => ({
 }))
 
 export const issues = sqliteTable('issues', {
-  id: integer('id').primaryKey(),
+  id: id(),
   name: text('name').notNull(),
   projectId: text('projectId'),
   userId: text('userId').notNull(),
@@ -49,7 +50,7 @@ export const issueRelations = relations(issues, ({ one }) => ({
 }))
 
 export const projects = sqliteTable('projects', {
-  id: integer('id').primaryKey(),
+  id: id(),
   name: text('name').notNull(),
   userId: text('userId').notNull(),
   content: text('content').notNull(),
