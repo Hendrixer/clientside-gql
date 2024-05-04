@@ -41,9 +41,9 @@ const resolvers = {
     issues: async (
       _,
       {
-        input: { statuses, projects },
+        input,
       }: {
-        input: {
+        input?: {
           statuses?: SelectIssues['status'][]
           projects?: SelectIssues['projectId'][]
         }
@@ -55,20 +55,12 @@ const resolvers = {
 
       const andFilters = [eq(issues.userId, ctx.user.id)]
 
-      if (statuses && statuses.length) {
-        const statusFilters = statuses.map((status) =>
+      if (input && input.statuses && input.statuses.length) {
+        const statusFilters = input.statuses.map((status) =>
           eq(issues.status, status)
         )
 
         andFilters.push(or(...statusFilters))
-      }
-
-      if (projects && projects.length) {
-        const projectFilters = projects
-          .filter(Boolean)
-          .map((projectId) => eq(issues.projectId, projectId))
-
-        andFilters.push(or(...projectFilters))
       }
 
       const data = await db.query.issues.findMany({

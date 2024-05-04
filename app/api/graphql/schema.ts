@@ -50,7 +50,7 @@ input IssuesFilterInput {
 
 type Query {
   me: User
-  issues(input: IssuesFilterInput): [Issue]
+  issues(input: IssuesFilterInput): [Issue]!
 }
 
 type Mutation {

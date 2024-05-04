@@ -1,6 +1,16 @@
+'use client'
+import { useEffect } from 'react'
 import Sidebar from './Sidebar'
+import { isAuth } from '@/utils/token'
+import { redirect } from 'next/navigation'
 
 const DashboardLayout = ({ children }) => {
+  useEffect(() => {
+    if (!isAuth()) {
+      redirect('/signin')
+    }
+  }, [])
+
   return (
     <div className="relative h-screen w-screen bg-slate-50">
       <aside className="absolute left-0 top-0 w-[200px] h-full">
