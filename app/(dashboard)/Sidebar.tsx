@@ -22,7 +22,7 @@ const Sidebar = () => {
             return (
               <div key={link.href}>
                 <Link href={link.href}>
-                  <div className="flex gap-2 items-center hover:bg-white border hover:border-black/20 border-transparent py-2 px-1 rounded-lg transition-all">
+                  <div className="flex gap-2 items-center hover:bg-white border hover:border-black/20 border-transparent py-2 px-2 rounded-lg transition-all">
                     <link.Icon size={16} />
                     <span>{link.name}</span>
                   </div>

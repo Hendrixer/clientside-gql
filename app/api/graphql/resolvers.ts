@@ -2,7 +2,7 @@ import { db } from '@/db/db'
 import { InsertIssues, SelectIssues, issues, users } from '@/db/schema'
 import { GQLContext } from '@/types'
 import { getUserFromToken, signin, signup } from '@/utils/auth'
-import { and, eq, or } from 'drizzle-orm'
+import { and, asc, desc, eq, or, sql } from 'drizzle-orm'
 import { GraphQLError } from 'graphql'
 
 const resolvers = {
@@ -65,6 +65,14 @@ const resolvers = {
 
       const data = await db.query.issues.findMany({
         where: and(...andFilters),
+        orderBy: [
+          asc(sql`case ${issues.status}
+        when "backlog" then 1
+        when "inprogress" then 2
+        when "done" then 3
+      end`),
+          desc(issues.createdAt),
+        ],
       })
 
       return data
