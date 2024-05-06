@@ -46,6 +46,7 @@ input EditIssueInput {
 
 input IssuesFilterInput {
   statuses: [IssueStatus]
+  orderBy: String
 }
 
 type Query {
