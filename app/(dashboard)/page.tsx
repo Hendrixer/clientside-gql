@@ -35,7 +35,7 @@ const IssuesPage = () => {
     })
 
     if (result.data) {
-      // await replay({ requestPolicy: 'network-only' })
+      await replay({ requestPolicy: 'network-only' })
       close()
       setIssueName('')
       setIssueDescription('')
