@@ -1,5 +1,6 @@
 'use client'
 
+import { SignInMutation } from '@/app/gql/signinMutation'
 import { setToken } from '@/utils/token'
 import { Button, Input } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
@@ -10,8 +11,17 @@ const SigninPage = () => {
   const [state, setState] = useState({ password: '', email: '' })
   const router = useRouter()
 
+  const [signInResults, signIn] = useMutation(SignInMutation)
+
+  // pehilu@mailinator.com
   const handleSignin = async (e) => {
     e.preventDefault()
+
+    const data = await signIn({ input: state })
+    if (data.data?.signin) {
+      setToken(data.data.signin.token)
+      router.push('/')
+    }
   }
 
   return (

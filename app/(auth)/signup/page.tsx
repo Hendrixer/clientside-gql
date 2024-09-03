@@ -1,15 +1,27 @@
 'use client'
 
+import { SignUpMutation } from '@/app/gql/signupMutation'
+import { setToken } from '@/utils/token'
 import { Button, Input } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useMutation } from 'urql'
 
 const SignupPage = () => {
   const [state, setState] = useState({ password: '', email: '' })
   const router = useRouter()
 
+  const [signUpResult, signUp] = useMutation(SignUpMutation)
+
   const handleSignup = async (e) => {
     e.preventDefault()
+
+    const result = await signUp({ input: state })
+    console.log({ result })
+    if (result.data?.createUser) {
+      setToken(result.data.createUser.token)
+      router.push('/')
+    }
   }
 
   return (
