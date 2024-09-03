@@ -12,11 +12,12 @@ import {
   Tooltip,
   useDisclosure,
 } from '@nextui-org/react'
-import { useQuery } from '@urql/next'
+import { useMutation, useQuery } from '@urql/next'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import Issue from '../_components/Issue'
 import PageHeader from '../_components/PageHeader'
+import { CreateIssueMutation } from '../gql/createIssueMutation'
 import { IssuesQuery } from '../gql/issuesQuery'
 
 const IssuesPage = () => {
@@ -24,11 +25,27 @@ const IssuesPage = () => {
   const [issueName, setIssueName] = useState('')
   const [issueDescription, setIssueDescription] = useState('')
 
-  const onCreate = async (close) => {}
-
   const [{ data, fetching, error }, replay] = useQuery({
     query: IssuesQuery,
   })
+
+  const [createIssueResults, createIssue] = useMutation(CreateIssueMutation)
+
+  const onCreate = async (close) => {
+    const result = await createIssue({
+      input: {
+        name: issueName,
+        content: issueDescription,
+      },
+    })
+
+    if (result.data) {
+      close()
+      await replay({})
+      setIssueName('')
+      setIssueDescription('')
+    }
+  }
 
   return (
     <div>
