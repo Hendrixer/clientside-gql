@@ -1,8 +1,8 @@
 'use client'
 
 import PageHeader from '../_components/PageHeader'
-import { useMutation, useQuery } from 'urql'
-import { useState } from 'react'
+
+import { use, useState } from 'react'
 import {
   Button,
   Modal,
@@ -17,13 +17,34 @@ import {
 } from '@nextui-org/react'
 import { PlusIcon } from 'lucide-react'
 import Issue from '../_components/Issue'
+import { issue, useIssuesQuery } from '@/querys/use-issues.query'
+import { useCreateIssueQueryMutation } from '@/querys/use-create-issue-query-mutation.mutation'
 
 const IssuesPage = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [issueName, setIssueName] = useState('')
   const [issueDescription, setIssueDescription] = useState('')
+  const { data, isLoading, isError } = useIssuesQuery()
+  const createIssueMutation = useCreateIssueQueryMutation()
+  const issues: issue[] = data?.issues || []
 
-  const onCreate = async (close) => {}
+  const onCreate = async (close: () => void) => {
+    console.log('🐙 => ')
+    await createIssueMutation.mutateAsync({
+      input: {
+        content: issueDescription,
+        name: issueName,
+        status: 'TODO',
+      },
+    })
+    closeModalAndResetNameAndDescription()
+  }
+
+  const closeModalAndResetNameAndDescription = () => {
+    setIssueName('')
+    setIssueDescription('')
+    onOpenChange(false)
+  }
 
   return (
     <div>
@@ -37,12 +58,14 @@ const IssuesPage = () => {
           </button>
         </Tooltip>
       </PageHeader>
-
-      {[].map((issue) => (
-        <div key={issue.id}>
-          <Issue issue={issue} />
-        </div>
-      ))}
+      {isLoading && <Spinner />}
+      {isError && <div>Something went wrong</div>}
+      {issues &&
+        issues?.map((issue) => (
+          <div key={issue.id}>
+            <Issue issue={issue} />
+          </div>
+        ))}
 
       <Modal
         size="2xl"
@@ -85,7 +108,10 @@ const IssuesPage = () => {
                 </div>
               </ModalBody>
               <ModalFooter className="border-t">
-                <Button variant="ghost" onPress={() => onOpenChange(false)}>
+                <Button
+                  variant="ghost"
+                  onPress={() => closeModalAndResetNameAndDescription()}
+                >
                   Cancel
                 </Button>
                 <Button
