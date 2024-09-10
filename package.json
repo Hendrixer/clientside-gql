@@ -15,6 +15,8 @@
     "@as-integrations/next": "^3.0.0",
     "@libsql/client": "^0.6.0",
     "@nextui-org/react": "^2.3.6",
+    "@tanstack/react-query": "^5.55.0",
+    "@tanstack/react-query-devtools": "^5.55.4",
     "@urql/exchange-graphcache": "^7.0.2",
     "@urql/next": "^1.1.1",
     "bcrypt": "^5.1.1",
@@ -23,6 +25,7 @@
     "drizzle-orm": "^0.30.10",
     "framer-motion": "^11.1.7",
     "graphql": "^16.8.1",
+    "graphql-request": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
@@ -31,6 +34,7 @@
     "urql": "^4.0.7"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.53.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
